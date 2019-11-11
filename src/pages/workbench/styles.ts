@@ -312,4 +312,12 @@ export default StyleSheet.create({
     flexWrap:'wrap',
     justifyContent: 'space-between',
   },
+  'sts-wrap': {
+    borderTopWidth: scaleSize(1),
+    borderTopColor: '#EAEAEA',
+    borderBottomWidth: scaleSize(1),
+    borderBottomColor: '#EAEAEA',
+    paddingTop: scaleSize(22),
+    paddingBottom: scaleSize(22),
+  },
 })
