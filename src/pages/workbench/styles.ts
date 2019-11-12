@@ -319,5 +319,6 @@ export default StyleSheet.create({
     borderBottomColor: '#EAEAEA',
     paddingTop: scaleSize(22),
     paddingBottom: scaleSize(22),
+    paddingLeft: scaleSize(40)
   },
 })

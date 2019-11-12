@@ -27,19 +27,7 @@ import styles from './styles'
 import tracking, { PageTimer } from '../../utils/BuryPoint'
 import InitGuide from './InitGuide'
 import StatisticsView  from './statisticsView';
-
-const tabsTitles = [
-    {name: '近30天', id: '001'},
-    {name: '本月', id: '002'},
-    {name: '昨日', id: '003'},
-];
-
-const tabsContents = [
-    {name: '报备次数', unit: '次', amount: 0, id: '0001'},
-    {name: '带看次数', unit: '次', amount: 0, id: '0002'},
-    {name: '认购商铺', unit: '套', amount: 0, id: '0003'},
-    {name: '签约商铺', unit: '套', amount: 0, id: '0004'},
-]
+import RankingView from './rankingView';
 
 interface TStateProps {
     config: ConfigState
@@ -230,8 +218,9 @@ class Workbench extends PureComponent<NavigationScreenProps & TStateProps & Disp
                             ? (
                                 <>
                                     <View style={styles['location']}>
-                                        <Text
-                                            style={styles['location-weather-text']}>{(location.addressComponent || {}).district || (location.addressComponent || {}).province || '???'}</Text>
+                                        <Text style={styles['location-weather-text']}>
+                                            {(location.addressComponent || {}).district || (location.addressComponent || {}).province || '???'}
+                                        </Text>
                                         <View style={styles['location-line']} />
                                         <Text style={styles['location-weather-text']}>{weather && weather.now && weather.now.fl || '???'}℃</Text>
                                     </View>
@@ -304,16 +293,19 @@ class Workbench extends PureComponent<NavigationScreenProps & TStateProps & Disp
                     </View>
                 </View>
 
-                {/* 工具助手 */}
-                {
-                    <View style={styles['entry']}>
-                        <Text style={styles['entry-title']}>业务统计</Text>
-                        <View style={styles['sts-wrap']}>
-                            <Text style={{fontSize: scaleSize(28), color: '#868686'}}>业务数据统计时间：{'2018/10/1-2018/10/31'}</Text>
-                        </View>
-                        <StatisticsView tabsTitles={tabsTitles} tabsContents={tabsContents} />
+                {/* 业务统计 */}
+                <View>
+                    <View style={styles['sts-wrap']}>
+                        <Text style={{fontSize: scaleSize(28), color: '#868686'}}>业务数据统计时间：{'2018/10/1-2018/10/31'}</Text>
                     </View>
-                }
+                    <StatisticsView />
+                </View>
+
+                {/* 排行榜 */}
+                <View>
+                    <Image source={require('../../images/pictures/paihangbang2x.png')} style={{width: scaleSize(750), height: scaleSize(125)}} />
+                    <RankingView />
+                </View>
             </ScrollView>
 
             {/* 快速入口 */}
