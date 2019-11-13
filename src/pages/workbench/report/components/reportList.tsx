@@ -177,14 +177,14 @@ class ReportList extends Component<propsTypes> {
                                                 <View style={[styles['content-wrapBottom'], {marginRight: scaleSize(35)}]}>
                                                     <Image
                                                         style={styles['content-img']}
-                                                        source={require('../../../images/icons/copy2x.png')}
+                                                        source={require('../../../../images/icons/copy2x.png')}
                                                     />
                                                     <Text style={{color: '#4D4D4D'}}>{item.company}</Text>
                                                 </View>
                                                 <View style={styles['content-wrapBottom']}>
                                                     <Image
                                                         style={styles['content-img']}
-                                                        source={require('../../../images/icons/usercopy2x.png')}
+                                                        source={require('../../../../images/icons/usercopy2x.png')}
                                                     />
                                                     <Text style={{color: '#4D4D4D'}}>{item.broker}</Text>
                                                 </View>

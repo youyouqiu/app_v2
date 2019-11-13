@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Image, TouchableOpacity, View, Text, ScrollView } from 'react-native';
-import { scaleSize } from './../../../utils/screenUtil';
+import { scaleSize } from '../../../utils/screenUtil';
 import { Button } from 'teaset';
 import moment from 'moment';
 
