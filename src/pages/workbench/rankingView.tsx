@@ -28,7 +28,7 @@ const icons: any = [
     {url: require('../../images/icons/three2x.png'), id: '0003-3'},
 ];
 
-interface propsTypes {}
+interface propsTypes {};
 
 class RankingView extends Component<propsTypes> {
     constructor(props: any) {

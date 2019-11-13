@@ -280,16 +280,16 @@ class Workbench extends PureComponent<NavigationScreenProps & TStateProps & Disp
                 <View style={[styles['entry'], user.Resident ? styles['line'] : null]}>
                     <Text style={styles['entry-title']}>常用功能</Text>
                     <View style={styles['entry-list']}>
-                        <EntryIcon title='报备管理' path='reportList' auth={!guest} icon={require('./../../images/icons/entryIcon/bbgl2x.png')} />
+                        <EntryIcon title='报备管理' path='reportList' auth={true} icon={require('./../../images/icons/entryIcon/bbgl2x.png')} />
                         <EntryIcon title='签约管理' path='singList' auth={!guest} icon={require('./../../images/icons/entryIcon/qygl2x.png')} />
                         <EntryIcon title='审核管理' path='reviewList' auth={!guest} icon={require('./../../images/icons/entryIcon/shgl2x.png')} />
-                        <EntryIcon title='楼盘管理' path='buildingList' auth={true} icon={require('./../../images/icons/entryIcon/lpgl2x.png')} />
-                        <EntryIcon title='数据统计' path='statisticsList' auth={true} icon={require('./../../images/icons/entryIcon/sjtj2x.png')} />
+                        <EntryIcon title='楼盘管理' path='buildingList' auth={!guest} icon={require('./../../images/icons/entryIcon/lpgl2x.png')} />
+                        <EntryIcon title='数据统计' path='statisticsList' auth={!guest} icon={require('./../../images/icons/entryIcon/sjtj2x.png')} />
                     </View>
                     <View style={[styles['entry-list'], {paddingTop: scaleSize(44)}]}>
-                        <EntryIcon title='楼盘销控' path='marketList' auth={true} icon={require('./../../images/icons/entryIcon/lpxk2x.png')} />
-                        <EntryIcon title='通讯录' path='communicationList' auth={true} icon={require('./../../images/icons/entryIcon/txl2x.png')} />
-                        <EntryIcon title='经纪公司管理' path='companyList' auth={true} icon={require('./../../images/icons/entryIcon/jjgsgl2x.png')} />
+                        <EntryIcon title='楼盘销控' path='marketList' auth={!guest} icon={require('./../../images/icons/entryIcon/lpxk2x.png')} />
+                        <EntryIcon title='通讯录' path='communicationList' auth={!guest} icon={require('./../../images/icons/entryIcon/txl2x.png')} />
+                        <EntryIcon title='经纪公司管理' path='companyList' auth={!guest} icon={require('./../../images/icons/entryIcon/jjgsgl2x.png')} />
                     </View>
                 </View>
 
@@ -333,4 +333,4 @@ const mapStateToProps: MapStateToProps<TStateProps, any, any> = ({
     weather,
 })
 
-export default connect(mapStateToProps)(Workbench)
+export default connect(mapStateToProps)(Workbench);

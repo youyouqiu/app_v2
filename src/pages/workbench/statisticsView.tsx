@@ -27,9 +27,9 @@ const tabsContents: any = {
         {name: '认购商铺', unit: '套', amount: 2, id: '0003-3'},
         {name: '签约商铺', unit: '套', amount: 2, id: '0003-4'},
     ],
-}
+};
 
-interface propsTypes {}
+interface propsTypes {};
 
 class StatisticsView extends Component<propsTypes> {
     constructor(props: any) {
