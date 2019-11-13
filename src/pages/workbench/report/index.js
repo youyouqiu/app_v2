@@ -1,15 +1,14 @@
 import React, {Component} from 'react';
-import {TouchableOpacity, View, Text, Image, Clipboard} from 'react-native';
+import {TouchableOpacity, View, Image, Clipboard} from 'react-native';
 import {connect} from 'react-redux';
 import { Toast } from 'teaset';
-import moment from 'moment';
 // 工具
 import { scaleSize } from './../../../utils/screenUtil';
 import {verifyUser} from '../../../utils/utils'
 // 组件
 import BaseContainer from '../../../components/Page';
 import Modal from './../../../components/Modal';
-import ReportList from './reportList';
+import ReportList from './components/reportList';
 // 样式
 import { STYLE } from './style';
 
