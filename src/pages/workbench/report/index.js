@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
-import {TouchableOpacity, View, Image, Clipboard} from 'react-native';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { TouchableOpacity, View, Image, Clipboard } from 'react-native';
+import { connect } from 'react-redux';
 import { Toast } from 'teaset';
 // 工具
 import { scaleSize } from './../../../utils/screenUtil';
-import {verifyUser} from '../../../utils/utils'
+import { verifyUser } from '../../../utils/utils'
 // 组件
 import BaseContainer from '../../../components/Page';
 import Modal from './../../../components/Modal';
@@ -96,6 +96,7 @@ class Report extends Component {
         let copyText = '';
         let newPhone = [];
         ((reportInfo || {}).customerPhoneList || []).map((item, index) => {
+            console.log(index);
             newPhone.push(item.customerPhone || '');
         });
         if (reportInfo) {
@@ -137,7 +138,7 @@ class Report extends Component {
                 rightView={rightView}
             >
                 <View style={{borderTopWidth: scaleSize(1), borderTopColor: '#EAEAEA'}}>
-                    <ReportList />
+                    <ReportList {...this.props} />
                 </View>
 
                 <Modal

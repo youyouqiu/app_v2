@@ -12,6 +12,7 @@ import ForgetPwd from '../pages/login/forgetPwd'
 
 // 跳转页面
 import ReportList from '../pages/workbench/report/index'
+import ReportDetail from '../pages/workbench/report/reportDetail'
 import ReportSearch from '../pages/workbench/report/reportSearch'
 import BulidingSearch from '../pages/workbench/report/bulidingSearch'
 import VisitInfo from '../pages/workbench/report/visitInfo'
@@ -75,6 +76,10 @@ const routeConfigMap: NavigationRouteConfigMap = {
     // 报备列表
     reportList: {
         screen: ReportList,
+    },
+    // 报备详情
+    reportDetail: {
+        screen: ReportDetail,
     },
     // 报备搜索
     reportSearch: {

@@ -9,3 +9,5 @@
 
 / 报备私有组件库 -- components
     / 报备列表组件 -- reportList
+        / 报备列表内容组件 -- reportItem
+        
