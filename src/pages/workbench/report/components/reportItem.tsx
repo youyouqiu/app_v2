@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Image, TouchableOpacity, View, Text, ScrollView } from 'react-native';
 import { scaleSize } from '../../../../utils/screenUtil';
-import { Button } from 'teaset';
+import XKJButton from '../../../../components/Button';
 
 interface propsTypes {
     tabsItem: any
@@ -21,7 +21,7 @@ class ReportItem extends Component<propsTypes> {
     render() {
         let {tabsItem, gotoDetail, onConfirm} = this.props;
         return (
-            <ScrollView style={{height: '90%'}}>
+            <ScrollView style={{height: '91%'}}>
                 {
                     (tabsItem || []).map((item: any, index: number) => {
                         return (
@@ -65,7 +65,7 @@ class ReportItem extends Component<propsTypes> {
                                             <Text style={{color: '#4D4D4D'}}>{item.broker}</Text>
                                         </View>
                                     </View>
-                                    <Button
+                                    <XKJButton
                                         title={'确认报备'}
                                         onPress={onConfirm}
                                         style={styles['content-btn']}
@@ -133,6 +133,7 @@ const styles = StyleSheet.create({
     'content-btn': {
         width: scaleSize(160),
         height: scaleSize(72),
+        backgroundColor: 'white',
         borderColor: '#EAEAEA',
         borderWidth: scaleSize(1),
         borderRadius: scaleSize(4),

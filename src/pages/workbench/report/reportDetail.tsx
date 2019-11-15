@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, ScrollView } from 'react-native';
 import { connect, MapStateToProps } from 'react-redux';
 import { NavigationScreenProps } from 'react-navigation';
 import { Toast } from 'teaset';
 import { scaleSize } from '../../../utils/screenUtil';
 import moment from 'moment';
 import BaseContainer from '../../../components/Page';
+import ReportInfo from './components/reportInfo';
+import CompanyInfo from './components/companyInfo';
+import LookInfo from './components/lookInfo';
+import ReportSchedule from './components/reportSchedule';
 
 interface propsTypes {
     config: any
@@ -48,6 +52,7 @@ class ReportDetail extends Component<propsTypes & NavigationScreenProps> {
                 buildingName: '鲁能星城',
                 buildingFloor: '1栋-1层-101',
                 expectedLookTime: '2019-10-10T10:00:00',
+                buildingUrl: {uri: 'http://i2.w.yun.hjfile.cn/slide/201511/2015111912333692489.jpg'}
             },
             companyInfo: {
                 company: '重庆新耀行沙坪坝店',
@@ -60,8 +65,8 @@ class ReportDetail extends Component<propsTypes & NavigationScreenProps> {
                 sex: 0,
                 realLookTime: '2019-10-10T10:00:00',
                 urls: [
-                    {uri: '../../../images/pictures/timg3.jpg'},
-                    {uri: '../../../images/pictures/head.png'},
+                    {uri: 'http://hbimg.huabanimg.com/682cc0379edb85f3e484adaf9a8db10a0b5b05f11b22a-MgusCD_fw658'},
+                    {uri: 'http://p.store.itangyuan.com/p/chapter/attachment/Et-Set-uE-/EgfvEgbteB6ueBfVEtEVEGuwhb6uEvmS8mmmHvmCg15I5h5NgVMUG7M.jpg'},
                 ]
             },
             reportSchedule: {
@@ -104,6 +109,12 @@ class ReportDetail extends Component<propsTypes & NavigationScreenProps> {
         })
     }
 
+    // 拨打电话
+    onCallPhone = (phone: string) => {
+        console.log('onCallPhone', phone);
+
+    }
+
     render() {
         let {reportDetailData} = this.state;
         return (
@@ -113,13 +124,32 @@ class ReportDetail extends Component<propsTypes & NavigationScreenProps> {
                 scroll={false}
             >
                 <View style={styles['wrap']}>
-                    <View style={{borderTopWidth: scaleSize(1), borderTopColor: '#EAEAEA', padding: scaleSize(40)}}>
-                        <Text style={{fontSize: scaleSize(40), color: '#4A90E2'}}>{((reportDetailData || {}).reportSchedule || {}).reportTypeText}</Text>
-                    </View>
-                    <View style={styles['content-boldLine']}></View>
-                    <View >
-                        <Text>报备信息</Text>
-                    </View>
+                    <ScrollView style={{height: '100%'}}>
+                        <View style={styles['top-wrap']}>
+                            <Text style={{fontSize: scaleSize(40), color: '#4A90E2'}}>
+                                {((reportDetailData || {}).reportSchedule || {}).reportTypeText}
+                            </Text>
+                        </View>
+                        <View style={styles['content-boldLine']}></View>
+                        <View style={{paddingLeft: scaleSize(40), paddingRight: scaleSize(40)}}>
+                            <ReportInfo reportInfoData={(reportDetailData || {}).reportInfo || {}} />
+                        </View>
+                        <View style={styles['content-boldLine']}></View>
+                        <View style={{paddingLeft: scaleSize(40), paddingRight: scaleSize(40)}}>
+                            <CompanyInfo
+                                companyInfoData={(reportDetailData || {}).companyInfo || {}}
+                                onConfirm={(phone: string) => {this.onCallPhone(phone)}}
+                            />
+                        </View>
+                        <View style={styles['content-boldLine']}></View>
+                        <View>
+                            <LookInfo lookInfoData={(reportDetailData || {}).lookInfo || {}} />
+                        </View>
+                        <View style={styles['content-boldLine']}></View>
+                        <View style={{paddingLeft: scaleSize(40), paddingRight: scaleSize(40)}}>
+                            <ReportSchedule reportScheduleData={(reportDetailData || {}).reportSchedule || {}} />
+                        </View>
+                    </ScrollView>
                 </View>
             </BaseContainer>
         )
@@ -129,8 +159,12 @@ class ReportDetail extends Component<propsTypes & NavigationScreenProps> {
 const styles = StyleSheet.create({
     'wrap': {
         width: '100%',
-        height: '100%',
         backgroundColor: 'white',
+    },
+    'top-wrap': {
+        borderTopWidth: scaleSize(1),
+        borderTopColor: '#EAEAEA',
+        padding: scaleSize(40),
     },
     'content-boldLine': {
         width: '100%',
