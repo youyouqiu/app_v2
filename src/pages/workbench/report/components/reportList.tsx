@@ -29,7 +29,7 @@ class ReportList extends Component<propsTypes & NavigationScreenProps> {
         tabsContents: {} as tabsContentsTypes, // 初始报备列表
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.getReportList();
     }
 
@@ -136,9 +136,9 @@ class ReportList extends Component<propsTypes & NavigationScreenProps> {
     }
 
     // 列表跳转详情页
-    gotoDetail = (type: number) => {
-        console.log('gotoDetail', type);
-        this.props.navigation.navigate('reportDetail', {type});
+    gotoDetail = (item: any) => {
+        console.log('gotoDetail', item);
+        this.props.navigation.navigate('reportDetail', {item});
     }
 
     // 列表确认按钮
@@ -148,7 +148,7 @@ class ReportList extends Component<propsTypes & NavigationScreenProps> {
     }
 
     render() {
-        let {page, tabsContents} = this.state;
+        const {page, tabsContents} = this.state;
         return (
             <View style={styles['wrap']}>
                 <View style={styles['title-wrap']}>

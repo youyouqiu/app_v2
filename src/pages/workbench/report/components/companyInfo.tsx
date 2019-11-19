@@ -15,7 +15,7 @@ class CompanyInfo extends Component<propsTypes> {
 
     state = {}
 
-    componentWillMount() {}
+    componentDidMount() {}
 
     render() {
         const {companyInfoData, onConfirm} = this.props;

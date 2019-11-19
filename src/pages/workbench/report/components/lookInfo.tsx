@@ -13,7 +13,7 @@ class LookInfo extends Component<propsTypes> {
 
     state = {}
 
-    componentWillMount() {}
+    componentDidMount() {}
 
     render() {
         const {lookInfoData} = this.props;

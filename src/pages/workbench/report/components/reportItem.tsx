@@ -16,10 +16,10 @@ class ReportItem extends Component<propsTypes> {
 
     state = {}
 
-    componentWillMount() {}
+    componentDidMount() {}
 
     render() {
-        let {tabsItem, gotoDetail, onConfirm} = this.props;
+        const {tabsItem, gotoDetail, onConfirm} = this.props;
         return (
             <ScrollView style={{height: '91%'}}>
                 {
@@ -29,7 +29,7 @@ class ReportItem extends Component<propsTypes> {
                                 key={item.id}
                                 activeOpacity={0.8}
                                 style={styles['content-wrap']}
-                                onPress={() => gotoDetail(item.reportType)}
+                                onPress={() => gotoDetail(item)}
                             >
                                 <View style={styles['content-boldLine']} />
                                 <View style={styles['content-wrapTop']}>

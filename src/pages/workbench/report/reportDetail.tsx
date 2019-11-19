@@ -24,39 +24,52 @@ interface reportDetailDataTypes {
     reportSchedule: any
 };
 
+interface reportItem {
+    userName: string
+    phone: string
+    reportType: number
+    bulidingName: string,
+    reportTime: string,
+    company: string,
+    broker: string,
+    id: string
+};
+
 class ReportDetail extends Component<propsTypes & NavigationScreenProps> {
     constructor(props: any) {
         super(props);
     }
 
     state = {
-        type: 0, // 报备状态
+        reportItem: {} as reportItem,
         reportDetailData: {} as reportDetailDataTypes,
     }
 
     componentWillMount() {
-        // let {navigation} = this.props;
-        // this.setState({
-        //     type: (((navigation || {}).state || {}).params || {}).type || 0,
-        // })
-        this.getReportDetailData();
+        const {navigation} = this.props;
+        this.setState({
+            reportItem: (((navigation || {}).state || {}).params || {}).item || {},
+        }, () => {
+            this.getReportDetailData();
+        })
     }
 
     // 报备详情数据请求
     getReportDetailData = () => {
         console.log('getReportDetailData');
+        const {reportItem} = this.state;
         let reportDetailData: any = {
             reportInfo: {
-                userName: '德玛西亚之力-盖伦',
-                userPhone: '138****8875',
-                buildingName: '鲁能星城',
+                userName: reportItem.userName,
+                userPhone: reportItem.phone,
+                buildingName: reportItem.bulidingName,
                 buildingFloor: '1栋-1层-101',
                 expectedLookTime: '2019-10-10T10:00:00',
                 buildingUrl: {uri: 'http://i2.w.yun.hjfile.cn/slide/201511/2015111912333692489.jpg'}
             },
             companyInfo: {
-                company: '重庆新耀行沙坪坝店',
-                broker: '老王',
+                company: reportItem.company,
+                broker: reportItem.broker,
                 brokerPhone: '13678091194',
             },
             lookInfo: {
@@ -70,7 +83,7 @@ class ReportDetail extends Component<propsTypes & NavigationScreenProps> {
                 ]
             },
             reportSchedule: {
-                type: 0
+                type: reportItem.reportType,
             },
         };
         if (!reportDetailData.reportInfo) {
@@ -116,7 +129,7 @@ class ReportDetail extends Component<propsTypes & NavigationScreenProps> {
     }
 
     render() {
-        let {reportDetailData} = this.state;
+        const {reportDetailData} = this.state;
         return (
             <BaseContainer
                 title='报备详情'

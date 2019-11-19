@@ -13,7 +13,7 @@ class ReportInfo extends Component<propsTypes> {
 
     state = {}
 
-    componentWillMount() {}
+    componentDidMount() {}
 
     render() {
         const {reportInfoData} = this.props;
