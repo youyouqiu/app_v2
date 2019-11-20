@@ -15,7 +15,7 @@ class Report extends Component {
 
     componentDidMount() {}
 
-    // 跳转搜索页面
+    // ? 跳转搜索页面
     gotoSearchPage = () => {
         this.props.navigation.navigate('reportSearch');
     }

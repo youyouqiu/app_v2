@@ -37,7 +37,7 @@ class ReportItem extends Component<propsTypes> {
                                         <Text style={[styles['content-text'], {marginRight: scaleSize(32)}]}>{item.userName}</Text>
                                         <Text style={styles['content-text']}>{item.phone}</Text>
                                     </View>
-                                    <Text style={{fontSize: scaleSize(28), color: '#4480F7'}}>{item.reportTypeText}</Text>
+                                    <Text style={{fontSize: scaleSize(28), color: '#4480F7'}}>{item.typeText}</Text>
                                 </View>
                                 <View style={styles['content-line']} />
                                 <View style={styles['content-wrapCenter']}>

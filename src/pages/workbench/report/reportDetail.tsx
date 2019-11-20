@@ -10,6 +10,7 @@ import ReportInfo from './components/reportInfo';
 import CompanyInfo from './components/companyInfo';
 import LookInfo from './components/lookInfo';
 import ReportSchedule from './components/reportSchedule';
+import BuyShopInfo from './components/buyShopInfo';
 
 interface propsTypes {
     config: any
@@ -21,13 +22,14 @@ interface reportDetailDataTypes {
     reportInfo: any
     companyInfo: any
     lookInfo: any
+    buyShopInfo: any
     reportSchedule: any
 };
 
 interface reportItem {
     userName: string
     phone: string
-    reportType: number
+    type: number
     bulidingName: string,
     reportTime: string,
     company: string,
@@ -41,11 +43,11 @@ class ReportDetail extends Component<propsTypes & NavigationScreenProps> {
     }
 
     state = {
-        reportItem: {} as reportItem,
-        reportDetailData: {} as reportDetailDataTypes,
+        reportItem: {} as reportItem, // ! 报备列表数据
+        reportDetailData: {} as reportDetailDataTypes, // ! 报备详情数据
     }
 
-    componentWillMount() {
+    componentDidMount() {
         const {navigation} = this.props;
         this.setState({
             reportItem: (((navigation || {}).state || {}).params || {}).item || {},
@@ -54,7 +56,7 @@ class ReportDetail extends Component<propsTypes & NavigationScreenProps> {
         })
     }
 
-    // 报备详情数据请求
+    // ? 报备详情数据请求
     getReportDetailData = () => {
         console.log('getReportDetailData');
         const {reportItem} = this.state;
@@ -82,8 +84,32 @@ class ReportDetail extends Component<propsTypes & NavigationScreenProps> {
                     {uri: 'http://p.store.itangyuan.com/p/chapter/attachment/Et-Set-uE-/EgfvEgbteB6ueBfVEtEVEGuwhb6uEvmS8mmmHvmCg15I5h5NgVMUG7M.jpg'},
                 ]
             },
+            buyShopInfo: {
+                shopName: '12号楼-2层-S7-46002',
+                buyPrice: 328000,
+                area: 158,
+                type: 0,
+                shopUrl: {uri: 'http://i2.w.yun.hjfile.cn/slide/201511/2015111912333692489.jpg'}
+            },
             reportSchedule: {
-                type: reportItem.reportType,
+                type: reportItem.type,
+                schedule: [
+                    {
+                        name: '老王',
+                        type: 0,
+                        time: '2019-10-10T10:00:00'
+                    },
+                    {
+                        name: '南宫铁牛',
+                        type: 1,
+                        time: '2019-10-10T10:00:00'
+                    },
+                    {
+                        name: '欧阳翠花',
+                        type: 2,
+                        time: '2019-10-10T10:00:00'
+                    },
+                ]
             },
         };
         if (!reportDetailData.reportInfo) {
@@ -97,7 +123,7 @@ class ReportDetail extends Component<propsTypes & NavigationScreenProps> {
         })
     }
 
-    // 数据处理
+    // ? 数据处理
     dataProcessing = () => {
         console.log('dataProcessing');
         const {reportDetailData} = this.state;
@@ -106,23 +132,46 @@ class ReportDetail extends Component<propsTypes & NavigationScreenProps> {
         ((newReportDetailData || {}).lookInfo || {}).realLookTime = moment(((newReportDetailData || {}).lookInfo || {}).realLookTime).format('YYYY-MM-DD HH:mm:ss');
         ((newReportDetailData ||{}).lookInfo || {}).sexText = ((newReportDetailData ||{}).lookInfo || {}).sex === 0 ? '女' : '男';
         if (((newReportDetailData || {}).reportSchedule || {}).type === 0) {
-            ((newReportDetailData || {}).reportSchedule || {}).reportTypeText = '无效';
+            ((newReportDetailData || {}).reportSchedule || {}).typeText = '无效';
         }
         if (((newReportDetailData || {}).reportSchedule || {}).type === 1) {
-            ((newReportDetailData || {}).reportSchedule || {}).reportTypeText = '待确认';
+            ((newReportDetailData || {}).reportSchedule || {}).typeText = '待确认';
         }
         if (((newReportDetailData || {}).reportSchedule || {}).type === 2) {
-            ((newReportDetailData || {}).reportSchedule || {}).reportTypeText = '待认购';
+            ((newReportDetailData || {}).reportSchedule || {}).typeText = '待认购';
         }
         if (((newReportDetailData || {}).reportSchedule || {}).type === 3) {
-            ((newReportDetailData || {}).reportSchedule || {}).reportTypeText = '已认购';
+            ((newReportDetailData || {}).reportSchedule || {}).typeText = '已认购';
+        }
+        (((newReportDetailData || {}).reportSchedule || {}).schedule || []).map((item: any, index: number) => {
+            if (item.type === 0) {
+                item.typeText = '发起报备';
+            }
+            if (item.type === 1) {
+                item.typeText = '确认报备';
+            }
+            if (item.type === 2) {
+                item.typeText = '确认看房';
+            }
+        });
+        if (((newReportDetailData || {}).buyShopInfo || {}).buyPrice) {
+            ((newReportDetailData || {}).buyShopInfo || {}).buyPriceText = '';
+        }
+        if (((newReportDetailData || {}).buyShopInfo || {}).type === 0) {
+            ((newReportDetailData || {}).buyShopInfo || {}).typeText = '已换客';
+        }
+        if (((newReportDetailData || {}).buyShopInfo || {}).type === 1) {
+            ((newReportDetailData || {}).buyShopInfo || {}).typeText = '已换房';
+        }
+        if (((newReportDetailData || {}).buyShopInfo || {}).type === 2) {
+            ((newReportDetailData || {}).buyShopInfo || {}).typeText = '';
         }
         this.setState({
             reportDetailData: newReportDetailData,
         })
     }
 
-    // 拨打电话
+    // ? 拨打电话
     onCallPhone = (phone: string) => {
         console.log('onCallPhone', phone);
 
@@ -140,7 +189,7 @@ class ReportDetail extends Component<propsTypes & NavigationScreenProps> {
                     <ScrollView style={{height: '100%'}}>
                         <View style={styles['top-wrap']}>
                             <Text style={{fontSize: scaleSize(40), color: '#4A90E2'}}>
-                                {((reportDetailData || {}).reportSchedule || {}).reportTypeText}
+                                {((reportDetailData || {}).reportSchedule || {}).typeText}
                             </Text>
                         </View>
                         <View style={styles['content-boldLine']}></View>
@@ -157,6 +206,10 @@ class ReportDetail extends Component<propsTypes & NavigationScreenProps> {
                         <View style={styles['content-boldLine']}></View>
                         <View>
                             <LookInfo lookInfoData={(reportDetailData || {}).lookInfo || {}} />
+                        </View>
+                        <View style={styles['content-boldLine']}></View>
+                        <View style={{paddingLeft: scaleSize(40), paddingRight: scaleSize(40)}}>
+                            <BuyShopInfo buyShopInfoData={(reportDetailData || {}).buyShopInfo || {}} />
                         </View>
                         <View style={styles['content-boldLine']}></View>
                         <View style={{paddingLeft: scaleSize(40), paddingRight: scaleSize(40)}}>

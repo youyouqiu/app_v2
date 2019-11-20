@@ -1,6 +1,4 @@
 import {StyleSheet} from 'react-native';
-
-// 工具
 import {scaleSize} from '../../../utils/screenUtil';
 
 export const STYLE = StyleSheet.create({

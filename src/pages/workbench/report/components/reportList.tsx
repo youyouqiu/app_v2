@@ -25,15 +25,15 @@ class ReportList extends Component<propsTypes & NavigationScreenProps> {
     }
 
     state = {
-        page: 0, // 初始tab页
-        tabsContents: {} as tabsContentsTypes, // 初始报备列表
+        page: 0, // ! 初始tab页
+        tabsContents: {} as tabsContentsTypes, // ! 初始报备列表
     }
 
     componentDidMount() {
         this.getReportList();
     }
 
-    // 报备列表数据请求
+    // ? 报备列表数据请求
     getReportList = () => {
         console.log('getReportList');
         let tabsContents: any = {
@@ -41,7 +41,7 @@ class ReportList extends Component<propsTypes & NavigationScreenProps> {
                 {
                     userName: '陈真-1',
                     phone: '13880009875',
-                    reportType: 0,
+                    type: 0,
                     bulidingName: '鲁能新城',
                     reportTime: '2018-10-10T12:00:00',
                     company: '重庆新耀行',
@@ -53,7 +53,7 @@ class ReportList extends Component<propsTypes & NavigationScreenProps> {
                 {
                     userName: '陈真-2',
                     phone: '13880009875',
-                    reportType: 1,
+                    type: 1,
                     bulidingName: '鲁能新城',
                     reportTime: '2018-10-10T12:00:00',
                     company: '重庆新耀行',
@@ -65,7 +65,7 @@ class ReportList extends Component<propsTypes & NavigationScreenProps> {
                 {
                     userName: '陈真-3',
                     phone: '13880009875',
-                    reportType: 2,
+                    type: 2,
                     bulidingName: '鲁能新城',
                     reportTime: '2018-10-10T12:00:00',
                     company: '重庆新耀行',
@@ -77,7 +77,7 @@ class ReportList extends Component<propsTypes & NavigationScreenProps> {
                 {
                     userName: '陈真-4',
                     phone: '13880009875',
-                    reportType: 3,
+                    type: 3,
                     bulidingName: '鲁能新城',
                     reportTime: '2018-10-10T12:00:00',
                     company: '重庆新耀行',
@@ -97,7 +97,7 @@ class ReportList extends Component<propsTypes & NavigationScreenProps> {
         })
     }
 
-    // 数据处理
+    // ? 数据处理
     dataProcessing = () => {
         console.log('dataProcessing');
         const {tabsContents} = this.state;
@@ -105,17 +105,17 @@ class ReportList extends Component<propsTypes & NavigationScreenProps> {
         let newArr: any[] = [];
         for (let i: number = 0; i < 4; i++) {
             ((newTabsContents || {})[i] || []).map((item: any, index: number) => {
-                if (item.reportType === 0) {
-                    item.reportTypeText = '无效';
+                if (item.type === 0) {
+                    item.typeText = '无效';
                 }
-                if (item.reportType === 1) {
-                    item.reportTypeText = '待确认';
+                if (item.type === 1) {
+                    item.typeText = '待确认';
                 }
-                if (item.reportType === 2) {
-                    item.reportTypeText = '待认购';
+                if (item.type === 2) {
+                    item.typeText = '待认购';
                 }
-                if (item.reportType === 3) {
-                    item.reportTypeText = '已认购';
+                if (item.type === 3) {
+                    item.typeText = '已认购';
                 }
                 item.reportTime = moment(item.reportTime).format('YYYY-MM-DD HH:mm:ss');
                 newArr.push(item);
@@ -127,7 +127,7 @@ class ReportList extends Component<propsTypes & NavigationScreenProps> {
         });
     }
 
-    // tabs页面改变时
+    // ? tabs页面改变时
     onChangeTabs = (page: number) => {
         console.log('onChangeTabs', page);
         this.setState({
@@ -135,13 +135,13 @@ class ReportList extends Component<propsTypes & NavigationScreenProps> {
         })
     }
 
-    // 列表跳转详情页
+    // ? 列表跳转详情页
     gotoDetail = (item: any) => {
         console.log('gotoDetail', item);
         this.props.navigation.navigate('reportDetail', {item});
     }
 
-    // 列表确认按钮
+    // ? 列表确认按钮
     onConfirm = () => {
         console.log('onConfirm');
 
