@@ -84,13 +84,32 @@ class ReportDetail extends Component<propsTypes & NavigationScreenProps> {
                     {uri: 'http://p.store.itangyuan.com/p/chapter/attachment/Et-Set-uE-/EgfvEgbteB6ueBfVEtEVEGuwhb6uEvmS8mmmHvmCg15I5h5NgVMUG7M.jpg'},
                 ]
             },
-            buyShopInfo: {
-                shopName: '12号楼-2层-S7-46002',
-                buyPrice: 328000,
-                area: 158,
-                type: 0,
-                shopUrl: {uri: 'http://i2.w.yun.hjfile.cn/slide/201511/2015111912333692489.jpg'}
-            },
+            buyShopInfo: [
+                {
+                    id: '0001',
+                    shopName: '12号楼-2层-S7-46001',
+                    buyPrice: 328001,
+                    area: 151,
+                    type: 0,
+                    shopUrl: {uri: 'http://i2.w.yun.hjfile.cn/slide/201511/2015111912333692489.jpg'}
+                },
+                {
+                    id: '0002',
+                    shopName: '12号楼-2层-S7-46002',
+                    buyPrice: 328002,
+                    area: 152,
+                    type: 1,
+                    shopUrl: {uri: 'http://i2.w.yun.hjfile.cn/slide/201511/2015111912333692489.jpg'}
+                },
+                {
+                    id: '0003',
+                    shopName: '12号楼-2层-S7-46003',
+                    buyPrice: 328003,
+                    area: 153,
+                    type: 2,
+                    shopUrl: {uri: 'http://i2.w.yun.hjfile.cn/slide/201511/2015111912333692489.jpg'}
+                },
+            ],
             reportSchedule: {
                 type: reportItem.type,
                 schedule: [
@@ -128,6 +147,7 @@ class ReportDetail extends Component<propsTypes & NavigationScreenProps> {
         console.log('dataProcessing');
         const {reportDetailData} = this.state;
         let newReportDetailData = {...reportDetailData};
+        let reg =/\d{1,3}(?=(\d{3})+$)/g; // ! 数字千分位正则
         ((newReportDetailData || {}).reportInfo || {}).expectedLookTime = moment(((newReportDetailData || {}).reportInfo || {}).expectedLookTime).format('YYYY-MM-DD HH:mm:ss');
         ((newReportDetailData || {}).lookInfo || {}).realLookTime = moment(((newReportDetailData || {}).lookInfo || {}).realLookTime).format('YYYY-MM-DD HH:mm:ss');
         ((newReportDetailData ||{}).lookInfo || {}).sexText = ((newReportDetailData ||{}).lookInfo || {}).sex === 0 ? '女' : '男';
@@ -154,18 +174,24 @@ class ReportDetail extends Component<propsTypes & NavigationScreenProps> {
                 item.typeText = '确认看房';
             }
         });
-        if (((newReportDetailData || {}).buyShopInfo || {}).buyPrice) {
-            ((newReportDetailData || {}).buyShopInfo || {}).buyPriceText = '';
-        }
-        if (((newReportDetailData || {}).buyShopInfo || {}).type === 0) {
-            ((newReportDetailData || {}).buyShopInfo || {}).typeText = '已换客';
-        }
-        if (((newReportDetailData || {}).buyShopInfo || {}).type === 1) {
-            ((newReportDetailData || {}).buyShopInfo || {}).typeText = '已换房';
-        }
-        if (((newReportDetailData || {}).buyShopInfo || {}).type === 2) {
-            ((newReportDetailData || {}).buyShopInfo || {}).typeText = '';
-        }
+        ((newReportDetailData || {}).buyShopInfo || []).map((item: any, index: number) => {
+            if (item.buyPrice) { 
+                let newBuyPrice = (item.buyPrice + '').replace(reg, '$&,');
+                item.buyPriceText = `${newBuyPrice} 元`;
+            }
+            if (item.area) {
+                item.areaText = `${item.area} m²`;
+            }
+            if (item.type === 0) {
+                item.typeText = '已换客';
+            }
+            if (item.type === 1) {
+                item.typeText = '已换房';
+            }
+            if (item.type === 2) {
+                item.buyPriceText = '';
+            }
+        });
         this.setState({
             reportDetailData: newReportDetailData,
         })
@@ -209,7 +235,7 @@ class ReportDetail extends Component<propsTypes & NavigationScreenProps> {
                         </View>
                         <View style={styles['content-boldLine']}></View>
                         <View style={{paddingLeft: scaleSize(40), paddingRight: scaleSize(40)}}>
-                            <BuyShopInfo buyShopInfoData={(reportDetailData || {}).buyShopInfo || {}} />
+                            <BuyShopInfo buyShopInfoData={(reportDetailData || {}).buyShopInfo || []} />
                         </View>
                         <View style={styles['content-boldLine']}></View>
                         <View style={{paddingLeft: scaleSize(40), paddingRight: scaleSize(40)}}>

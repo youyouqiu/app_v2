@@ -168,7 +168,7 @@ class ReportList extends Component<propsTypes & NavigationScreenProps> {
                         })
                     }
                 </View>
-                <View>
+                <View style={{flex: 1}}>
                     <ReportItem
                         tabsItem={((tabsContents || {})[page] || [])}
                         gotoDetail={this.gotoDetail}
@@ -182,7 +182,10 @@ class ReportList extends Component<propsTypes & NavigationScreenProps> {
 
 const styles = StyleSheet.create({
     'wrap': {
+        height: '100%',
         backgroundColor: 'white',
+        display: 'flex',
+        flexDirection: 'column',
     },
     'title-wrap': {
         display: 'flex',

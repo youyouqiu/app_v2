@@ -21,7 +21,7 @@ class ReportItem extends Component<propsTypes> {
     render() {
         const {tabsItem, gotoDetail, onConfirm} = this.props;
         return (
-            <ScrollView style={{height: '91%'}}>
+            <ScrollView style={{height: '100%'}}>
                 {
                     (tabsItem || []).map((item: any, index: number) => {
                         return (
