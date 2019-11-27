@@ -1,7 +1,9 @@
-import React, { Component } from 'react';
-import { StyleSheet, Image, TouchableOpacity, View, Text, ScrollView } from 'react-native';
+import React, { Component, PureComponent } from 'react';
+import { StyleSheet, Image, TouchableOpacity, View, Text, FlatList } from 'react-native';
 import { scaleSize } from '../../../../utils/screenUtil';
 import XKJButton from '../../../../components/Button';
+
+let newRefreshing: boolean = true;
 
 interface propsTypes {
     tabsItem: any
@@ -9,75 +11,113 @@ interface propsTypes {
     onConfirm: any
 };
 
-class ReportItem extends Component<propsTypes> {
+interface isEndReachedTypes {
+    [index: number]: any
+};
+
+class ReportItem extends PureComponent<propsTypes> {
     constructor(props: any) {
         super(props);
     }
 
-    state = {}
+    state = {
+        isEndReached: {} as isEndReachedTypes,
+    }
 
-    componentDidMount() {}
+    componentDidMount() { }
+
+    // ? renderItem
+    handTabsContent = (item: any) => {
+        console.log(item, 'item');
+        const { gotoDetail, onConfirm } = this.props;
+        return (
+            <TouchableOpacity
+                key={item.id}
+                activeOpacity={0.8}
+                style={styles['content-wrap']}
+                onPress={() => gotoDetail(item)}
+            >
+                <View style={styles['content-boldLine']} />
+                <View style={styles['content-wrapTop']}>
+                    <View style={{ display: 'flex', flexDirection: 'row' }}>
+                        <Text style={[styles['content-text'], { marginRight: scaleSize(32) }]}>{item.userName}</Text>
+                        <Text style={styles['content-text']}>{item.phone}</Text>
+                    </View>
+                    <Text style={{ fontSize: scaleSize(28), color: '#4480F7' }}>{item.typeText}</Text>
+                </View>
+                <View style={styles['content-line']} />
+                <View style={styles['content-wrapCenter']}>
+                    <Text style={[styles['content-text'], { paddingBottom: scaleSize(24) }]}>{item.bulidingName}</Text>
+                    <Text style={{ color: '#868686' }}>
+                        报备申请时间：
+                        <Text style={{ color: '#4D4D4D' }}>{item.reportTime}</Text>
+                    </Text>
+                </View>
+                <View style={styles['content-line']} />
+                <View style={styles['content-wrapTop']}>
+                    <View style={{ display: 'flex', flexDirection: 'row' }}>
+                        <View style={[styles['content-wrapBottom'], { marginRight: scaleSize(35) }]}>
+                            <Image
+                                style={styles['content-img']}
+                                source={require('../../../../images/icons/copy2x.png')}
+                            />
+                            <Text style={{ color: '#4D4D4D' }}>{item.company}</Text>
+                        </View>
+                        <View style={styles['content-wrapBottom']}>
+                            <Image
+                                style={styles['content-img']}
+                                source={require('../../../../images/icons/usercopy2x.png')}
+                            />
+                            <Text style={{ color: '#4D4D4D' }}>{item.broker}</Text>
+                        </View>
+                    </View>
+                    <XKJButton
+                        title={'确认报备'}
+                        onPress={onConfirm}
+                        style={styles['content-btn']}
+                        titleStyle={{ color: '#4D4D4D', fontSize: scaleSize(28) }}
+                        activeOpacity={0.8}
+                    />
+                </View>
+            </TouchableOpacity>
+        )
+    }
+
+    // ? 下拉刷新
+    refreshData = (page: number) => {
+        console.log(page, 'page')
+        // const {initReportData, initReportCount} = this.props;
+        // initReportData(page); // 下拉刷新时即时请求数据
+        // initReportCount(); // 下拉刷新时即时请求数量
+    }
+
+    // 上拉加载
+    endReachedData = (page: number) => {
+        console.log(page, 'endReachedData');
+        // const {initReportData, initReportCount} = this.props;
+        // initReportData(page); // 上拉加载时即时请求数据
+        // initReportCount(); // 上拉加载时时即时请求数量
+    }
 
     render() {
-        const {tabsItem, gotoDetail, onConfirm} = this.props;
+        const { tabsItem } = this.props;
+        const { isEndReached } = this.state;
+        if (tabsItem) {
+            newRefreshing = false;
+        }
         return (
-            <ScrollView style={{height: '100%'}}>
-                {
-                    (tabsItem || []).map((item: any, index: number) => {
-                        return (
-                            <TouchableOpacity
-                                key={item.id}
-                                activeOpacity={0.8}
-                                style={styles['content-wrap']}
-                                onPress={() => gotoDetail(item)}
-                            >
-                                <View style={styles['content-boldLine']} />
-                                <View style={styles['content-wrapTop']}>
-                                    <View style={{display: 'flex', flexDirection: 'row'}}>
-                                        <Text style={[styles['content-text'], {marginRight: scaleSize(32)}]}>{item.userName}</Text>
-                                        <Text style={styles['content-text']}>{item.phone}</Text>
-                                    </View>
-                                    <Text style={{fontSize: scaleSize(28), color: '#4480F7'}}>{item.typeText}</Text>
-                                </View>
-                                <View style={styles['content-line']} />
-                                <View style={styles['content-wrapCenter']}>
-                                    <Text style={[styles['content-text'], {paddingBottom: scaleSize(24)}]}>{item.bulidingName}</Text>
-                                    <Text style={{color: '#868686'}}>
-                                        报备申请时间：
-                                        <Text style={{color: '#4D4D4D'}}>{item.reportTime}</Text>
-                                    </Text>
-                                </View>
-                                <View style={styles['content-line']} />
-                                <View style={styles['content-wrapTop']}>
-                                    <View style={{display: 'flex', flexDirection: 'row'}}>
-                                        <View style={[styles['content-wrapBottom'], {marginRight: scaleSize(35)}]}>
-                                            <Image
-                                                style={styles['content-img']}
-                                                source={require('../../../../images/icons/copy2x.png')}
-                                            />
-                                            <Text style={{color: '#4D4D4D'}}>{item.company}</Text>
-                                        </View>
-                                        <View style={styles['content-wrapBottom']}>
-                                            <Image
-                                                style={styles['content-img']}
-                                                source={require('../../../../images/icons/usercopy2x.png')}
-                                            />
-                                            <Text style={{color: '#4D4D4D'}}>{item.broker}</Text>
-                                        </View>
-                                    </View>
-                                    <XKJButton
-                                        title={'确认报备'}
-                                        onPress={onConfirm}
-                                        style={styles['content-btn']}
-                                        titleStyle={{color: '#4D4D4D', fontSize: scaleSize(28)}}
-                                        activeOpacity={0.8}
-                                    />
-                                </View>
-                            </TouchableOpacity>
-                        )
-                    })
-                }
-            </ScrollView>
+            <View style={{height: '100%'}}>
+                <FlatList
+                    style={{height: '100%'}}
+                    data={tabsItem}
+                    extraData={this.state}
+                    renderItem={({item}) => this.handTabsContent(item)}
+                    refreshing={newRefreshing}
+                    onRefresh={() => {this.refreshData(0)}}
+                    onEndReached={() => {isEndReached[0] ? this.endReachedData(0) : null}}
+                    onEndReachedThreshold={0.2}
+                />
+            </View>
         )
     }
 }

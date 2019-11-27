@@ -16,8 +16,7 @@ class BuyShopInfo extends Component<propsTypes> {
     componentDidMount() {}
 
     render() {
-        const {buyShopInfoData} = this.props;
-        console.log(buyShopInfoData, 'buyShopInfoData');
+        const { buyShopInfoData } = this.props;
         return (
             <View>
                 <Text style={styles['text']}>认购商铺信息</Text>
@@ -25,22 +24,22 @@ class BuyShopInfo extends Component<propsTypes> {
                     (buyShopInfoData || []).map((item: any, index: number) => {
                         return (
                             <View key={index} style={[styles['wrap'], index === buyShopInfoData.length - 1 ? null : styles['isBorder']]}>
-                                <View style={styles['leftRightWrap']}> 
+                                <View style={styles['leftRightWrap']}>
                                     <Image
                                         source={item.shopUrl}
-                                        style={{width: scaleSize(210), height: scaleSize(160)}}
+                                        style={{ width: scaleSize(210), height: scaleSize(160) }}
                                     />
                                     <View style={styles['rightWrap']}>
                                         <View style={styles['textWrap']}>
                                             <Text style={styles['textTwo']}>{item.shopName}</Text>
                                             <Text style={{fontSize: scaleSize(28), color: '#4480F7'}}>{item.typeText}</Text>
                                         </View>
-                                        <View style={{display: 'flex', flexDirection: 'column'}}>
+                                        <View style={{ display: 'flex', flexDirection: 'column' }}>
                                             <Text style={styles['textThree']}>
                                                 认购总价：
                                                 <Text>{item.buyPriceText}</Text>
                                             </Text>
-                                            <Text style={{fontSize: scaleSize(22), color: '#4D4D4D'}}>
+                                            <Text style={{ fontSize: scaleSize(22), color: '#4D4D4D' }}>
                                                 建筑面积：
                                                 <Text>{item.areaText}</Text>
                                             </Text>
@@ -51,7 +50,7 @@ class BuyShopInfo extends Component<propsTypes> {
                         )
                     })
                 }
-            </View>  
+            </View>
         )
     }
 }
